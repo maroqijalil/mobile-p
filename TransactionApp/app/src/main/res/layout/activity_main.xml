@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:padding="16dp"
+  tools:context=".view.MainActivity">
+
+  <TableLayout
+    android:id="@+id/main_tl_input"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:stretchColumns="1">
+
+    <TableRow>
+      <TextView
+        android:text="@string/customer_name"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+      <EditText
+        android:id="@+id/etNamaPelanggan"
+        android:layout_marginStart="8dp"
+        android:imeOptions="actionNext"
+        android:inputType="text" />
+    </TableRow>
+
+    <TableRow>
+      <TextView
+        android:text="@string/things_name"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+      <EditText
+        android:id="@+id/etNamaBarang"
+        android:layout_marginStart="8dp"
+        android:imeOptions="actionNext" />
+    </TableRow>
+
+    <TableRow>
+      <TextView
+        android:text="@string/things_num"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+      <EditText
+        android:id="@+id/etJmlBarang"
+        android:layout_marginStart="8dp"
+        android:imeOptions="actionNext"
+        android:inputType="number" />
+    </TableRow>
+
+    <TableRow>
+      <TextView
+        android:text="@string/price"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+      <EditText
+        android:id="@+id/etHarga"
+        android:layout_marginStart="8dp"
+        android:imeOptions="actionNext"
+        android:inputType="number" />
+    </TableRow>
+
+    <TableRow>
+      <TextView
+        android:text="@string/money"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+      <EditText
+        android:id="@+id/etJmlUang"
+        android:layout_marginStart="8dp"
+        android:imeOptions="actionNext"
+        android:inputType="number" />
+    </TableRow>
+  </TableLayout>
+
+  <Button
+    android:id="@+id/main_btn_process"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/main_tl_input"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    android:elevation="2dp"
+    android:text="@string/process"
+    android:textColor="@android:color/white" />
+
+  <View
+    android:id="@+id/main_v_divider"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_below="@id/main_btn_process"
+    android:layout_marginTop="8dp"
+    android:background="@color/colorPrimary" />
+
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_above="@id/main_ll_btns"
+    android:layout_below="@id/main_v_divider"
+    android:layout_marginVertical="16dp"
+    android:scrollbars="none">
+
+    <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/main_rv_item"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      tools:listitem="@layout/item_main"/>
+  </ScrollView>
+
+  <LinearLayout
+    android:id="@+id/main_ll_btns"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_alignParentBottom="true">
+
+    <Button
+      android:id="@+id/main_btn_deletee"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:elevation="2dp"
+      android:text="@string/delete_data"
+      android:textColor="@android:color/white"
+      android:layout_marginEnd="16dp"/>
+
+    <Button
+      android:id="@+id/main_btn_out"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:elevation="2dp"
+      android:text="@string/out"
+      android:textColor="@android:color/white"/>
+  </LinearLayout>
+</RelativeLayout>
