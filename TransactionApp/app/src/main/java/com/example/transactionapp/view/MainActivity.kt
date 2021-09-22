@@ -35,10 +35,6 @@ class MainActivity : AppCompatActivity() {
     binding.mainBtnProcess.setOnClickListener {
       var isValid = true
 
-      if (binding.etNamaPelanggan.text.isNullOrEmpty()) {
-        binding.etNamaPelanggan.error = "Isian tidak boleh kosong"
-        isValid = false
-      }
       if (binding.etNamaBarang.text.isNullOrEmpty()) {
         binding.etNamaBarang.error = "Isian tidak boleh kosong"
         isValid = false
@@ -51,20 +47,16 @@ class MainActivity : AppCompatActivity() {
         binding.etHarga.error = "Isian tidak boleh kosong"
         isValid = false
       }
-      if (binding.etJmlUang.text.isNullOrEmpty()) {
-        binding.etJmlUang.error = "Isian tidak boleh kosong"
-        isValid = false
-      }
 
       if (isValid) {
         val data = TransactionData(
-          binding.etNamaPelanggan.text.toString(),
           binding.etNamaBarang.text.toString(),
           binding.etJmlBarang.text.toString().toInt(),
           binding.etHarga.text.toString().toDouble(),
-          binding.etJmlUang.text.toString().toDouble()
         )
         adapter.addItem(data)
+
+        binding.tvTotal.text = getTotalPrice(adapter.getList()).toString()
       }
     }
 
@@ -72,12 +64,54 @@ class MainActivity : AppCompatActivity() {
       adapter.clearList()
     }
 
-    binding.mainBtnOut.setOnClickListener {
-      moveTaskToBack(true)
+    binding.mainBtnPay.setOnClickListener {
+      var isValid = true
+
+      if (binding.etNamaPelanggan.text.isNullOrEmpty()) {
+        binding.etNamaPelanggan.error = "Isian tidak boleh kosong"
+        isValid = false
+      }
+      if (binding.etJmlUang.text.isNullOrEmpty()) {
+        binding.etJmlUang.error = "Isian tidak boleh kosong"
+        isValid = false
+      }
+
+      if (isValid) {
+        val total = getTotalPrice(adapter.getList())
+        val retur = binding.etJmlUang.text.toString().toDouble() - total
+
+        binding.tvKembalian.text = if (retur >= 0.0) {
+          retur.toString()
+        } else {
+          "-"
+        }
+
+        binding.tvBonus.text = if (total >= 200000) {
+          "HardDisk 1TB"
+        } else if (total >= 50000) {
+          "Keyboard Gaming"
+        } else if (total >= 40000) {
+          "Mouse Gaming"
+        } else {
+          "Tidak ada bonus!"
+        }
+
+        binding.tvKeterangan.text = if (retur < 0.0) {
+          "Belum lunas dengan kekurangan: Rp. $retur"
+        } else if (retur > 0.0) {
+          "Lunas dengan kembalian: Rp. $retur"
+        } else {
+          "Lunas"
+        }
+      }
     }
   }
 
-  private fun showToast(msg: String) {
-    Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+  fun getTotalPrice(transactions: ArrayList<TransactionData>): Double {
+    var total = 0.0
+    transactions.forEach { data ->
+      total += data.getTotalPrice()
+    }
+    return total
   }
 }

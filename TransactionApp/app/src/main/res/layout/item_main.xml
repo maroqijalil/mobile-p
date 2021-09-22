@@ -10,22 +10,6 @@
   <TableRow android:layout_marginBottom="6dp">
 
     <TextView
-      android:text="@string/customer_name"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-
-    <TextView
-      android:id="@+id/tvNamaPembeli"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-  </TableRow>
-
-  <TableRow android:layout_marginBottom="6dp">
-
-    <TextView
       android:text="@string/things_name"
       android:textColor="@android:color/black"
       android:textStyle="bold" />
@@ -64,86 +48,6 @@
 
     <TextView
       android:id="@+id/tvHarga"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-  </TableRow>
-
-  <TableRow android:layout_marginBottom="6dp">
-
-    <TextView
-      android:text="@string/money"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-
-    <TextView
-      android:id="@+id/tvUangBayar"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-  </TableRow>
-
-  <TableRow android:layout_marginBottom="6dp">
-
-    <TextView
-      android:text="@string/total_price"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-
-    <TextView
-      android:id="@+id/tvTotal"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-  </TableRow>
-
-  <TableRow android:layout_marginBottom="6dp">
-
-    <TextView
-      android:text="@string/money_ret"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-
-    <TextView
-      android:id="@+id/tvKembalian"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-  </TableRow>
-
-  <TableRow android:layout_marginBottom="6dp">
-
-    <TextView
-      android:text="@string/bonus"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-
-    <TextView
-      android:id="@+id/tvBonus"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-  </TableRow>
-
-  <TableRow android:layout_marginBottom="6dp">
-
-    <TextView
-      android:text="@string/desc"
-      android:textColor="@android:color/black"
-      android:textStyle="bold" />
-
-    <TextView
-      android:id="@+id/tvKeterangan"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"

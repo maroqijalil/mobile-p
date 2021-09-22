@@ -6,11 +6,11 @@
   <string name="things_num">Jumlah Barang</string>
   <string name="price">Harga (Rp)</string>
   <string name="money">Uang Bayar</string>
-  <string name="process">Proses</string>
+  <string name="process">Tambah</string>
   <string name="delete_data">Hapus Data</string>
-  <string name="out">Keluar</string>
-  <string name="total_price">Total Harga</string>
-  <string name="money_ret">Kembalian</string>
+  <string name="pay">Bayar</string>
+  <string name="total_price">Total Harga (RP)</string>
+  <string name="money_ret">Kembalian (RP)</string>
   <string name="bonus">Bonus</string>
   <string name="desc">Keterangan</string>
 </resources>

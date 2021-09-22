@@ -37,4 +37,8 @@ class TransactionListAdapter : RecyclerView.Adapter<TransactionListViewHolder>()
     transactions.clear()
     notifyDataSetChanged()
   }
+
+  fun getList(): ArrayList<TransactionData> {
+    return transactions
+  }
 }
