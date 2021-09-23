@@ -1,1 +1,2 @@
-# mobile-p
+# mobile-p  
+Tugas-tugas Pemrograman Perangkat Bergerak.
