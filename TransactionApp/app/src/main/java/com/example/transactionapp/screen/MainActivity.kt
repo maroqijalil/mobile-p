@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.transactionapp.adapter.TransactionListAdapter
 import com.example.transactionapp.databinding.ActivityMainBinding
-import com.example.transactionapp.model.TransactionData
+import com.example.transactionapp.model.ProdukModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
       }
 
       if (isValid) {
-        val data = TransactionData(
+        val data = ProdukModel(
           binding.etNamaBarang.text.toString(),
           binding.etJmlBarang.text.toString().toInt(),
           binding.etHarga.text.toString().toDouble(),
@@ -106,9 +106,9 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  fun getTotalPrice(transactions: ArrayList<TransactionData>): Double {
+  fun getTotalPrice(produks: ArrayList<ProdukModel>): Double {
     var total = 0.0
-    transactions.forEach { data ->
+    produks.forEach { data ->
       total += data.getTotalPrice()
     }
     return total

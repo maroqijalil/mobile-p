@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.transactionapp.databinding.ItemMainBinding
-import com.example.transactionapp.model.TransactionData
+import com.example.transactionapp.model.ProdukModel
 
 class TransactionListAdapter : RecyclerView.Adapter<TransactionListViewHolder>() {
 
-  private var transactions = arrayListOf<TransactionData>()
+  private var transactions = arrayListOf<ProdukModel>()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionListViewHolder {
     return TransactionListViewHolder(
@@ -28,7 +28,7 @@ class TransactionListAdapter : RecyclerView.Adapter<TransactionListViewHolder>()
     return transactions.size
   }
 
-  fun addItem(data: TransactionData) {
+  fun addItem(data: ProdukModel) {
     transactions.add(data)
     notifyDataSetChanged()
   }
@@ -38,7 +38,7 @@ class TransactionListAdapter : RecyclerView.Adapter<TransactionListViewHolder>()
     notifyDataSetChanged()
   }
 
-  fun getList(): ArrayList<TransactionData> {
+  fun getList(): ArrayList<ProdukModel> {
     return transactions
   }
 }
