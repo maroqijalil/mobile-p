@@ -1,8 +1,7 @@
-package com.example.transactionapp.view
+package com.example.transactionapp.screen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.transactionapp.adapter.TransactionListAdapter
 import com.example.transactionapp.databinding.ActivityMainBinding
