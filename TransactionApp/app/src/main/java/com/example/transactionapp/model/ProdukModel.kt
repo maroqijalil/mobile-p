@@ -13,6 +13,10 @@ data class ProdukModel(
     return "produk"
   }
 
+  override fun getPrimaryKeyName(): String {
+    return "id_produk"
+  }
+
   override fun toMap(): Map<String, Any> {
     return mapOf(
       "nama_barang" to nama_barang,
@@ -22,7 +26,7 @@ data class ProdukModel(
   }
 
   override fun tableAttr(): String {
-    return "${getTableName()} (id_produk INTEGER PRIMARY KEY, " +
+    return "${getTableName()} (${getPrimaryKeyName()} INTEGER PRIMARY KEY, " +
       "nama_barang TEXT, jml_barang INTEGER, harga REAL)"
   }
 }

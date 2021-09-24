@@ -1,11 +1,15 @@
 package com.example.transactionapp.model
 
 data class TransaksiProdukModel(
-  var id_transaksi: Int = 0,
-  var id_produk: Int = 0
+  var id_transaksi: Long = 0L,
+  var id_produk: Long = 0L
 ): Model() {
   override fun getTableName(): String {
     return "transaksi_produk"
+  }
+
+  override fun getPrimaryKeyName(): String {
+    return "id_transaksi_model"
   }
 
   override fun toMap(): Map<String, Any> {
@@ -16,7 +20,7 @@ data class TransaksiProdukModel(
   }
 
   override fun tableAttr(): String {
-    return "${getTableName()} (id_transaksi_model INTEGER PRIMARY KEY, " +
+    return "${getTableName()} (${getPrimaryKeyName()} INTEGER PRIMARY KEY, " +
       "id_transaksi INTEGER, id_produk INTEGER)"
   }
 }

@@ -7,6 +7,10 @@ data class PelangganModel(
     return "pelanggan"
   }
 
+  override fun getPrimaryKeyName(): String {
+    return "id_pelanggan"
+  }
+
   override fun toMap(): Map<String, Any> {
     return mapOf(
       "nama_pelanggan" to nama_pelanggan
@@ -14,7 +18,7 @@ data class PelangganModel(
   }
 
   override fun tableAttr(): String {
-    return "${getTableName()} (id_pelanggan INTEGER PRIMARY KEY, " +
+    return "${getTableName()} (${getPrimaryKeyName()} INTEGER PRIMARY KEY, " +
       "nama_pelanggan TEXT)"
   }
 }
