@@ -1,6 +1,9 @@
 package com.example.transactionapp.model
 
+import android.database.Cursor
+
 data class ProdukModel(
+  var id_produk: Long = 0L,
   var nama_barang: String = "",
   var jml_barang: Int = 0,
   var harga: Double = 0.0,
@@ -15,6 +18,13 @@ data class ProdukModel(
 
   override fun getPrimaryKeyName(): String {
     return "id_produk"
+  }
+
+  override fun fillWithCursor(cursor: Cursor) {
+    id_produk = cursor.getLong(getColumnIndex(cursor, "id_produk"))
+    nama_barang = cursor.getString(getColumnIndex(cursor, "nama_barang"))
+    jml_barang = cursor.getInt(getColumnIndex(cursor, "jml_barang"))
+    harga = cursor.getDouble(getColumnIndex(cursor, "harga"))
   }
 
   override fun toMap(): Map<String, Any> {

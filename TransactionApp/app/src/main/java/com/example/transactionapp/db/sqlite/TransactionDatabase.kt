@@ -1,4 +1,4 @@
-package com.example.transactionapp.db.master
+package com.example.transactionapp.db.sqlite
 
 import android.content.Context
 import android.database.DatabaseErrorHandler
@@ -8,28 +8,27 @@ import com.example.transactionapp.model.*
 import android.content.ContentValues
 import android.database.Cursor
 
-class Database(
+class TransactionDatabase(
   context: Context?,
-  name: String?,
+  private val models: ArrayList<Model>,
+  name: String? = "transaction_app_database",
   factory: SQLiteDatabase.CursorFactory? = null,
   version: Int = 1,
   errorHandler: DatabaseErrorHandler? = null
 ) : SQLiteOpenHelper(context, name, factory, version, errorHandler) {
   override fun onCreate(db: SQLiteDatabase?) {
     if (db != null) {
-      createTable(db, PelangganModel())
-      createTable(db, ProdukModel())
-      createTable(db, TransaksiModel())
-      createTable(db, TransaksiProdukModel())
+      models.forEach { model ->
+        createTable(db, model)
+      }
     }
   }
 
   override fun onUpgrade(db: SQLiteDatabase?, old: Int, new: Int) {
     if (db != null) {
-      dropTable(db, PelangganModel())
-      dropTable(db, ProdukModel())
-      dropTable(db, TransaksiModel())
-      dropTable(db, TransaksiProdukModel())
+      models.forEach { model ->
+        dropTable(db, model)
+      }
 
       onCreate(db)
     }
@@ -60,16 +59,41 @@ class Database(
     return db.insert(model.getTableName(), null, values)
   }
 
-  fun read(model: Model, id: Long?): Cursor? {
+  fun <T: Model>read(id: Long?, model: T): ArrayList<T> {
     val db = this.readableDatabase
-    val query = if (id != null) {
-      "SELECT * FROM ${model.getTableName()} " +
-        "WHERE ${model.getPrimaryKeyName()} = $id"
+    val list = arrayListOf<T>()
+    var query = ""
+    val cursor: Cursor?
+
+    if (id != null) {
+      query = "SELECT * FROM ${model.getTableName()} " +
+        "WHERE ${model.getPrimaryKeyName()}='$id'"
+
+      cursor = db.rawQuery(query, null)
+      if (cursor.count > 0) {
+        if (cursor != null) {
+          cursor.moveToFirst()
+          model.fillWithCursor(cursor)
+          list.add(model)
+        }
+      }
     } else {
-      "SELECT * FROM ${model.getTableName()}"
+      query = "SELECT * FROM ${model.getTableName()}"
+
+      cursor = db.rawQuery(query, null)
+      if (cursor.count > 0) {
+        if (cursor != null) {
+          if (cursor.moveToFirst()) {
+            do {
+              model.fillWithCursor(cursor)
+              list.add(model)
+            } while (cursor.moveToNext())
+          }
+        }
+      }
     }
 
-    return db.rawQuery(query, null)
+    return list
   }
 
   fun update(model: Model, id: Long?): Int {
