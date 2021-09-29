@@ -6,7 +6,7 @@ data class TransaksiProdukModel(
   var id_transaksi_produk: Long = 0L,
   var id_transaksi: Long = 0L,
   var id_produk: Long = 0L
-): Model() {
+) : Model() {
   override fun getTableName(): String {
     return "transaksi_produk"
   }
@@ -15,10 +15,12 @@ data class TransaksiProdukModel(
     return "id_transaksi_produk"
   }
 
-  override fun fillWithCursor(cursor: Cursor) {
-    id_transaksi_produk = cursor.getLong(getColumnIndex(cursor, "id_transaksi_produk"))
-    id_transaksi = cursor.getLong(getColumnIndex(cursor, "id_transaksi"))
-    id_produk = cursor.getLong(getColumnIndex(cursor, "id_produk"))
+  override fun fillWithCursor(cursor: Cursor): TransaksiProdukModel {
+    return TransaksiProdukModel(
+      id_transaksi_produk = cursor.getLong(getColumnIndex(cursor, "id_transaksi_produk")),
+      id_transaksi = cursor.getLong(getColumnIndex(cursor, "id_transaksi")),
+      id_produk = cursor.getLong(getColumnIndex(cursor, "id_produk"))
+    )
   }
 
   override fun toMap(): Map<String, Any> {

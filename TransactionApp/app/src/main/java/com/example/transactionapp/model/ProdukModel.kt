@@ -20,11 +20,13 @@ data class ProdukModel(
     return "id_produk"
   }
 
-  override fun fillWithCursor(cursor: Cursor) {
-    id_produk = cursor.getLong(getColumnIndex(cursor, "id_produk"))
-    nama_barang = cursor.getString(getColumnIndex(cursor, "nama_barang"))
-    jml_barang = cursor.getInt(getColumnIndex(cursor, "jml_barang"))
-    harga = cursor.getDouble(getColumnIndex(cursor, "harga"))
+  override fun fillWithCursor(cursor: Cursor): ProdukModel {
+    return ProdukModel(
+      id_produk = cursor.getLong(getColumnIndex(cursor, "id_produk")),
+      nama_barang = cursor.getString(getColumnIndex(cursor, "nama_barang")),
+      jml_barang = cursor.getInt(getColumnIndex(cursor, "jml_barang")),
+      harga = cursor.getDouble(getColumnIndex(cursor, "harga"))
+    )
   }
 
   override fun toMap(): Map<String, Any> {

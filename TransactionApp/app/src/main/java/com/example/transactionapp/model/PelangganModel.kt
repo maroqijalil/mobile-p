@@ -5,7 +5,7 @@ import android.database.Cursor
 data class PelangganModel(
   var id_pelanggan: Long = 0L,
   var nama_pelanggan: String = ""
-): Model() {
+) : Model() {
   override fun getTableName(): String {
     return "pelanggan"
   }
@@ -14,9 +14,11 @@ data class PelangganModel(
     return "id_pelanggan"
   }
 
-  override fun fillWithCursor(cursor: Cursor) {
-    id_pelanggan = cursor.getLong(getColumnIndex(cursor, "id_pelanggan"))
-    nama_pelanggan = cursor.getString(getColumnIndex(cursor, "nama_pelanggan"))
+  override fun fillWithCursor(cursor: Cursor): PelangganModel {
+    return PelangganModel(
+      id_pelanggan = cursor.getLong(getColumnIndex(cursor, "id_pelanggan")),
+      nama_pelanggan = cursor.getString(getColumnIndex(cursor, "nama_pelanggan"))
+    )
   }
 
   override fun toMap(): Map<String, Any> {

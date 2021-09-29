@@ -1,9 +1,7 @@
 package com.example.transactionapp.screen
 
-import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.transactionapp.adapter.TransactionListAdapter
@@ -19,7 +17,9 @@ class MainActivity : AppCompatActivity() {
 
   private lateinit var database: TransactionDatabase
 
-  var database_log = "TransactionAppDatabase"
+  companion object {
+    const val database_log = "TransactionAppDatabase"
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         idProduks.forEach { id ->
-          database.insert(TransaksiProdukModel(id_produk = id, id_transaksi = idTransaksi))
+          val idTP = database.insert(TransaksiProdukModel(id_produk = id, id_transaksi = idTransaksi))
         }
       }
     }

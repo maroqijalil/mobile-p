@@ -5,8 +5,6 @@ import android.database.DatabaseErrorHandler
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.transactionapp.model.*
-import android.content.ContentValues
-import android.database.Cursor
 
 class TransactionDatabase(
   context: Context?,
@@ -43,20 +41,11 @@ class TransactionDatabase(
   }
 
   fun insert(model: Model): Long {
-    val db = this.writableDatabase
-    val values = ContentValues()
-    val map = model.toMap()
-
-    map.forEach { (key, value) ->
-      when (value) {
-        is String -> values.put(key, value)
-        is Long -> values.put(key, value)
-        is Int -> values.put(key, value)
-        is Double -> values.put(key, value)
-      }
-    }
-
-    return db.insert(model.getTableName(), null, values)
+    return this.writableDatabase.insert(
+      model.getTableName(),
+      null,
+      model.getContentValues()
+    )
   }
 
   fun <T : Model> read(model: T, id: Long?, where: String = ""): ArrayList<T> {
@@ -72,11 +61,11 @@ class TransactionDatabase(
     }
 
     val cursor = db.rawQuery(query, null)
-    if (cursor.count > 0 && cursor != null) {
+    if (cursor != null && cursor.count > 0) {
       if (cursor.moveToFirst()) {
         do {
-          model.fillWithCursor(cursor)
-          list.add(model)
+          val newModel = model.fillWithCursor(cursor)
+          list.add(newModel as T)
         } while (cursor.moveToNext())
       }
     }
@@ -85,29 +74,17 @@ class TransactionDatabase(
   }
 
   fun update(model: Model, id: Long?): Int {
-    val db = this.writableDatabase
-    val values = ContentValues()
-    val map = model.toMap()
-
-    map.forEach { (key, value) ->
-      when (value) {
-        is String -> values.put(key, value)
-        is Long -> values.put(key, value)
-        is Int -> values.put(key, value)
-        is Double -> values.put(key, value)
-      }
-    }
-
-    return db.update(
+    return this.writableDatabase.update(
       model.getTableName(),
-      values,
+      model.getContentValues(),
       "${model.getPrimaryKeyName()} = $id",
       null
     )
   }
 
   fun delete(model: Model, id: Long) {
-    val db = this.writableDatabase
-    db.delete(model.getTableName(), "${model.getPrimaryKeyName()} = $id", null)
+    this.writableDatabase.delete(
+      model.getTableName(), "${model.getPrimaryKeyName()} = $id", null
+    )
   }
 }

@@ -10,7 +10,7 @@ data class TransaksiModel(
   var kembalian: Double = 0.0,
   var bonus: String = "",
   var keterangan: String = ""
-): Model() {
+) : Model() {
   override fun getTableName(): String {
     return "transaksi"
   }
@@ -19,14 +19,16 @@ data class TransaksiModel(
     return "id_transaksi"
   }
 
-  override fun fillWithCursor(cursor: Cursor) {
-    id_transaksi = cursor.getLong(getColumnIndex(cursor, "id_transaksi"))
-    uang_bayar = cursor.getDouble(getColumnIndex(cursor, "uang_bayar"))
-    id_pelanggan = cursor.getLong(getColumnIndex(cursor, "id_pelanggan"))
-    total_bayar = cursor.getDouble(getColumnIndex(cursor, "total_bayar"))
-    kembalian = cursor.getDouble(getColumnIndex(cursor, "kembalian"))
-    bonus = cursor.getString(getColumnIndex(cursor, "bonus"))
-    keterangan = cursor.getString(getColumnIndex(cursor, "keterangan"))
+  override fun fillWithCursor(cursor: Cursor): TransaksiModel {
+    return TransaksiModel(
+      id_transaksi = cursor.getLong(getColumnIndex(cursor, "id_transaksi")),
+      uang_bayar = cursor.getDouble(getColumnIndex(cursor, "uang_bayar")),
+      id_pelanggan = cursor.getLong(getColumnIndex(cursor, "id_pelanggan")),
+      total_bayar = cursor.getDouble(getColumnIndex(cursor, "total_bayar")),
+      kembalian = cursor.getDouble(getColumnIndex(cursor, "kembalian")),
+      bonus = cursor.getString(getColumnIndex(cursor, "bonus")),
+      keterangan = cursor.getString(getColumnIndex(cursor, "keterangan"))
+    )
   }
 
   override fun toMap(): Map<String, Any> {
