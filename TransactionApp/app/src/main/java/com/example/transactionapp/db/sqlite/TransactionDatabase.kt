@@ -59,37 +59,25 @@ class TransactionDatabase(
     return db.insert(model.getTableName(), null, values)
   }
 
-  fun <T: Model>read(id: Long?, model: T): ArrayList<T> {
+  fun <T : Model> read(model: T, id: Long?, where: String = ""): ArrayList<T> {
     val db = this.readableDatabase
     val list = arrayListOf<T>()
-    var query = ""
-    val cursor: Cursor?
 
+    var query = "SELECT * FROM ${model.getTableName()}"
     if (id != null) {
-      query = "SELECT * FROM ${model.getTableName()} " +
-        "WHERE ${model.getPrimaryKeyName()}='$id'"
+      query += " WHERE ${model.getPrimaryKeyName()}='$id'"
+    }
+    if (where != "") {
+      query += " $where"
+    }
 
-      cursor = db.rawQuery(query, null)
-      if (cursor.count > 0) {
-        if (cursor != null) {
-          cursor.moveToFirst()
+    val cursor = db.rawQuery(query, null)
+    if (cursor.count > 0 && cursor != null) {
+      if (cursor.moveToFirst()) {
+        do {
           model.fillWithCursor(cursor)
           list.add(model)
-        }
-      }
-    } else {
-      query = "SELECT * FROM ${model.getTableName()}"
-
-      cursor = db.rawQuery(query, null)
-      if (cursor.count > 0) {
-        if (cursor != null) {
-          if (cursor.moveToFirst()) {
-            do {
-              model.fillWithCursor(cursor)
-              list.add(model)
-            } while (cursor.moveToNext())
-          }
-        }
+        } while (cursor.moveToNext())
       }
     }
 
@@ -118,8 +106,8 @@ class TransactionDatabase(
     )
   }
 
-  fun delete(id: Long, model: Model) {
+  fun delete(model: Model, id: Long) {
     val db = this.writableDatabase
-    db.delete(model.getTableName(),"${model.getPrimaryKeyName()} = $id",null)
+    db.delete(model.getTableName(), "${model.getPrimaryKeyName()} = $id", null)
   }
 }

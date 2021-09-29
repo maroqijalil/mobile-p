@@ -75,6 +75,11 @@ class MainActivity : AppCompatActivity() {
 
     binding.mainBtnDeletee.setOnClickListener {
       adapter.clearList()
+
+      binding.tvKeterangan.text = ""
+      binding.tvBonus.text = ""
+      binding.tvKembalian.text = ""
+      binding.tvTotal.text = ""
     }
 
     binding.mainBtnPay.setOnClickListener {
@@ -153,67 +158,62 @@ class MainActivity : AppCompatActivity() {
       }
 
       if (isValid) {
-        val db = database.readableDatabase
-        val pelanggan = PelangganModel(nama_pelanggan = binding.etNamaPelanggan.text.toString())
-
-        var query = "SELECT * FROM ${pelanggan.getTableName()} " +
-          "WHERE nama_pelanggan LIKE '%${pelanggan.nama_pelanggan}%'"
-
-        var cursor = db.rawQuery(query, null)
-        if (cursor.count > 0) {
-          if (cursor != null) {
-            cursor.moveToFirst()
-            pelanggan.fillWithCursor(cursor)
-          }
+        val pelanggan: PelangganModel
+        var result: Any?
+        result = database.read(
+          PelangganModel(),
+          null,
+          "WHERE nama_pelanggan LIKE '%${binding.etNamaPelanggan.text}%'"
+        )
+        if (result.size > 0) {
+          pelanggan = result[0]
         } else {
           showToast("Pengguna tidak ditemukan")
           return@setOnClickListener
         }
 
-        val transaksi = TransaksiModel(id_pelanggan = pelanggan.id_pelanggan)
-
-        query = "SELECT * FROM ${transaksi.getTableName()} " +
-          "WHERE id_pelanggan='${transaksi.id_pelanggan}'"
-
-        cursor = db.rawQuery(query, null)
-        if (cursor.count > 0) {
-          if (cursor != null) {
-            cursor.moveToFirst()
-            transaksi.fillWithCursor(cursor)
-          }
+        val transaksi: TransaksiModel
+        result = database.read(
+          TransaksiModel(),
+          null,
+          "WHERE id_pelanggan='${pelanggan.id_pelanggan}'"
+        )
+        if (result.size > 0) {
+          transaksi = result[0]
         } else {
           showToast("Transaksi tidak ditemukan")
           return@setOnClickListener
         }
 
-        val transaksiProduk = TransaksiProdukModel(id_transaksi = transaksi.id_transaksi)
+        binding.etJmlUang.setText(transaksi.uang_bayar.toString())
+        binding.tvTotal.text = transaksi.total_bayar.toString()
+        binding.tvKembalian.text = transaksi.kembalian.toString()
+        binding.tvBonus.text = transaksi.bonus
+        binding.tvKeterangan.text = transaksi.keterangan
+
         val transaksiProduks = arrayListOf<TransaksiProdukModel>()
-
-        query = "SELECT * FROM ${transaksiProduk.getTableName()} " +
-          "WHERE id_transaksi='${transaksiProduk.id_transaksi}'"
-
-        cursor = db.rawQuery(query, null)
-        if (cursor.count > 0) {
-          if (cursor != null) {
-            if (cursor.moveToFirst()) {
-              do {
-                transaksiProduk.fillWithCursor(cursor)
-                transaksiProduks.add(transaksiProduk)
-              } while (cursor.moveToNext())
-            }
+        result = database.read(
+          TransaksiProdukModel(),
+          null,
+          "WHERE id_transaksi='${transaksi.id_transaksi}'"
+        )
+        if (result.size > 0) {
+          result.forEach { tP ->
+            transaksiProduks.add(tP)
           }
         } else {
           return@setOnClickListener
         }
 
         val produks = arrayListOf<ProdukModel>()
-
         transaksiProduks.forEach { tp ->
-          val produk = database.read(tp.id_produk, ProdukModel())
+          val produk = database.read(ProdukModel(), tp.id_produk)
           if (produk.size > 0) {
-            produks.add(database.read(tp.id_produk, ProdukModel())[0])
+            produks.add(database.read(ProdukModel(), tp.id_produk)[0])
           }
         }
+
+        adapter.changeList(produks)
       }
     }
   }

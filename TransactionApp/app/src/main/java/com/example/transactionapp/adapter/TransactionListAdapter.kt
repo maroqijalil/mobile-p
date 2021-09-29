@@ -28,6 +28,15 @@ class TransactionListAdapter : RecyclerView.Adapter<TransactionListViewHolder>()
     return transactions.size
   }
 
+  fun changeList(datas: ArrayList<ProdukModel>) {
+    if (transactions.size > 0) {
+      transactions.clear()
+    }
+
+    transactions.addAll(datas)
+    notifyDataSetChanged()
+  }
+
   fun addItem(data: ProdukModel) {
     transactions.add(data)
     notifyDataSetChanged()
