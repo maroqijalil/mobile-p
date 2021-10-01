@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/AndroidProjects/mobile-p/ContactApp/app/src/main/res/layout/dialog_add_contact.xml" value="0.12708333333333333" />
+        <entry key="..\:/Projects/AndroidProjects/mobile-p/ContactApp/app/src/main/res/layout/item_contact.xml" value="0.1793478260869565" />
         <entry key="app/src/main/res/drawable/ic_baseline_contact_phone_24.xml" value="0.12314814814814815" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/dialog_add_contact.xml" value="0.33" />
