@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.contactapp.adapter.ContactListAdapter
 import com.example.contactapp.databinding.ActivityMainBinding
 import com.example.contactapp.dialog.AddContactDialog
+import com.example.contactapp.model.ContactModel
+import com.example.transactionapp.db.sqlite.ContactDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,11 +16,15 @@ class MainActivity : AppCompatActivity() {
 
   private lateinit var adapter: ContactListAdapter
 
+  private lateinit var database: ContactDatabase
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
+
+    database = ContactDatabase(this, arrayListOf(ContactModel()))
 
     setupButtons()
     setupList()
@@ -31,6 +37,8 @@ class MainActivity : AppCompatActivity() {
           showToast("Isi data dengan benar!")
         } else {
           adapter.addItem(data)
+
+          database.insert(data)
         }
       }.show(supportFragmentManager, null)
     }
@@ -42,6 +50,11 @@ class MainActivity : AppCompatActivity() {
       setHasFixedSize(true)
       layoutManager = LinearLayoutManager(this@MainActivity)
       adapter = this@MainActivity.adapter
+    }
+
+    val contacts = database.read(ContactModel(), null)
+    if (contacts.size > 0) {
+      adapter.changeList(contacts)
     }
   }
 
