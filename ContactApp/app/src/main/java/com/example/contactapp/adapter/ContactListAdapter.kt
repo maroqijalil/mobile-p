@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.databinding.ItemContactBinding
 import com.example.contactapp.model.ContactModel
 
-class ContactListAdapter : RecyclerView.Adapter<ContactListViewHolder>() {
+class ContactListAdapter(private val onItemClick: (ContactModel) -> Unit) :
+  RecyclerView.Adapter<ContactListViewHolder>() {
 
   private val list = arrayListOf<ContactModel>()
 
@@ -16,7 +17,8 @@ class ContactListAdapter : RecyclerView.Adapter<ContactListViewHolder>() {
         LayoutInflater.from(parent.context),
         parent,
         false
-      ).root
+      ).root,
+      onItemClick
     )
   }
 
