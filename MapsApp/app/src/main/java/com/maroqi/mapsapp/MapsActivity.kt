@@ -2,13 +2,21 @@ package com.maroqi.mapsapp
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.location.LocationRequest
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -23,6 +31,8 @@ class MapsActivity : AppCompatActivity() {
   private lateinit var requestPermissionLauncher: ActivityResultLauncher<Array<String>>
 
   private lateinit var locationListener: LocationListener
+
+  private lateinit var focusedLocationClient: FusedLocationProviderClient
 
   private var googleMap: GoogleMap? = null
 
@@ -56,8 +66,59 @@ class MapsActivity : AppCompatActivity() {
         }
       }
 
+    focusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+      if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_DENIED
+        && checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_DENIED
+      ) {
+        focusedLocationClient.lastLocation
+          .addOnSuccessListener { location : Location? ->
+            // Got last known location. In some rare situations this can be null.
+          }
+      } else {
+        getLocationPermissionFor {
+          focusedLocationClient.lastLocation
+            .addOnSuccessListener { location : Location? ->
+              // Got last known location. In some rare situations this can be null.
+            }
+        }
+      }
+    } else {
+      focusedLocationClient.lastLocation
+        .addOnSuccessListener { location : Location? ->
+          // Got last known location. In some rare situations this can be null.
+        }
+    }
+
     setupLocationMap()
     setupButtons()
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.menu_main, menu)
+    return super.onCreateOptionsMenu(menu)
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
+      R.id.main_normal -> {
+        googleMap?.mapType = GoogleMap.MAP_TYPE_NORMAL
+      }
+      R.id.main_hybird -> {
+        googleMap?.mapType = GoogleMap.MAP_TYPE_HYBRID
+      }
+      R.id.main_sattelit -> {
+        googleMap?.mapType = GoogleMap.MAP_TYPE_SATELLITE
+      }
+      R.id.main_terrain -> {
+        googleMap?.mapType = GoogleMap.MAP_TYPE_TERRAIN
+      }
+      R.id.main_none -> {
+        googleMap?.mapType = GoogleMap.MAP_TYPE_NONE
+      }
+    }
+    return super.onOptionsItemSelected(item)
   }
 
   override fun onStart() {
@@ -135,28 +196,41 @@ class MapsActivity : AppCompatActivity() {
     binding.mainBtnGo.setOnClickListener {
       var isValid = true
 
-      if (!binding.mapsTiLatitude.editText?.text.isNullOrEmpty()) {
+      if (binding.mapsTiLatitude.editText?.text.isNullOrEmpty()) {
         isValid = false
       }
-      if (!binding.mapsTiLongitude.editText?.text.isNullOrEmpty()) {
+      if (binding.mapsTiLongitude.editText?.text.isNullOrEmpty()) {
         isValid = false
       }
 
       if (isValid) {
-        setLocation(
-          binding.mapsTiLatitude.editText?.text.toString().toDouble(),
-          binding.mapsTiLongitude.editText?.text.toString().toDouble()
-        )
+        if (binding.mapsTiZoom.editText?.text.isNullOrEmpty()) {
+          setLocation(
+            binding.mapsTiLatitude.editText?.text.toString().toDouble(),
+            binding.mapsTiLongitude.editText?.text.toString().toDouble()
+          )
+        } else {
+          setLocation(
+            binding.mapsTiLatitude.editText?.text.toString().toDouble(),
+            binding.mapsTiLongitude.editText?.text.toString().toDouble(),
+            binding.mapsTiZoom.editText?.text.toString().toFloat()
+          )
+        }
       }
+
+      (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+        it.windowToken,
+        0
+      )
     }
   }
 
-  private fun setLocation(latitude: Double, longitude: Double) {
+  private fun setLocation(latitude: Double, longitude: Double, zoom: Float = 8f) {
     val loc = LatLng(latitude, longitude)
 
     if (this.googleMap != null) {
-      this.googleMap?.addMarker(MarkerOptions().position(loc).title("Lokasiku"))
-      this.googleMap?.moveCamera(CameraUpdateFactory.newLatLng(loc))
+      this.googleMap?.addMarker(MarkerOptions().position(loc).title("Lokasi Pilihan"))
+      this.googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, zoom))
     }
   }
 }
