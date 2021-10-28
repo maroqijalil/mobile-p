@@ -11,11 +11,11 @@
     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="24dp"
     android:hint="Nama Kontak"
     app:startIconDrawable="@drawable/ic_baseline_person_24"
-    app:startIconTint="@color/purple_700"
-    android:layout_marginTop="24dp"
-    android:layout_marginHorizontal="16dp">
+    app:startIconTint="@color/purple_700">
 
     <com.google.android.material.textfield.TextInputEditText
       android:layout_width="match_parent"
@@ -26,8 +26,8 @@
     android:id="@+id/dialog_ac_til_num"
     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
     android:layout_width="match_parent"
-    android:layout_marginHorizontal="16dp"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
     android:hint="Nomor Telepon"
     app:startIconDrawable="@drawable/ic_baseline_local_phone_24"
     app:startIconTint="@color/purple_700">
