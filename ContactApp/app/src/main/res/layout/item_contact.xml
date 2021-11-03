@@ -45,17 +45,6 @@
     android:layout_alignParentEnd="true"
     android:layout_alignBottom="@id/item_c_iv_contact"
     android:layout_alignTop="@id/item_c_iv_contact"
-    android:src="@drawable/ic_baseline_delete_24"
-    app:tint="@color/purple_700" />
-
-  <ImageView
-    android:layout_marginEnd="12dp"
-    android:id="@+id/item_c_iv_edit"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toStartOf="@id/item_c_iv_delete"
-    android:layout_alignBottom="@id/item_c_iv_contact"
-    android:layout_alignTop="@id/item_c_iv_contact"
-    android:src="@drawable/ic_baseline_edit_24"
+    android:src="@drawable/ic_baseline_arrow_forward_ios_24"
     app:tint="@color/purple_700" />
 </RelativeLayout>
