@@ -222,6 +222,7 @@ class MapsActivity : AppCompatActivity() {
     val loc = LatLng(latitude, longitude)
 
     if (this.googleMap != null) {
+      this.googleMap?.clear()
       this.googleMap?.addMarker(MarkerOptions().position(loc).title("Lokasi Pilihan"))
       this.googleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, zoom))
     }

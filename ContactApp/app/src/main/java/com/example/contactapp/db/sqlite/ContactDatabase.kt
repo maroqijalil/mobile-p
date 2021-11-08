@@ -82,9 +82,14 @@ class ContactDatabase(
     )
   }
 
-  fun delete(model: Model, id: Long) {
-    this.writableDatabase.delete(
-      model.getTableName(), "${model.getPrimaryKeyName()} = $id", null
-    )
+  fun delete(model: Model, id: Long?, where: String = "", whereArgs: Array<String> = arrayOf()) {
+    if (id != null) {
+      this.writableDatabase.delete(
+        model.getTableName(), "${model.getPrimaryKeyName()} = $id", null
+      )
+    }
+    if (where != "") {
+      this.writableDatabase.delete(model.getTableName(), where, whereArgs)
+    }
   }
 }

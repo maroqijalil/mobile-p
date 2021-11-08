@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.contactapp.databinding.ItemContactBinding
 import com.example.contactapp.model.ContactModel
 
-class ContactListAdapter(private val onItemClick: (ContactModel) -> Unit) :
+class ContactListAdapter(private val listener: ContactLisListener) :
   RecyclerView.Adapter<ContactListViewHolder>() {
 
   private val rawList = arrayListOf<ContactModel>()
@@ -19,7 +19,7 @@ class ContactListAdapter(private val onItemClick: (ContactModel) -> Unit) :
         parent,
         false
       ).root,
-      onItemClick
+      listener
     )
   }
 
@@ -56,6 +56,12 @@ class ContactListAdapter(private val onItemClick: (ContactModel) -> Unit) :
   fun addItem(item: ContactModel) {
     list.add(item)
     rawList.add(item)
+    notifyDataSetChanged()
+  }
+
+  fun removeItem(item: ContactModel) {
+    list.remove(item)
+    rawList.remove(item)
     notifyDataSetChanged()
   }
 

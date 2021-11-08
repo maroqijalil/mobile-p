@@ -1,16 +1,15 @@
-package com.example.contactapp.dialog
+package com.example.contactapp.dialog.addcontact
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.DialogFragment
 import com.example.contactapp.databinding.DialogAddContactBinding
 import com.example.contactapp.model.ContactModel
 
 class AddContactDialog(
-  private val onPositiveClick: (contact: ContactModel?) -> Unit
+  private val params: AddContactDialogParams
 ) : DialogFragment() {
 
   var binding: DialogAddContactBinding? = null
@@ -24,6 +23,11 @@ class AddContactDialog(
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
     binding = DialogAddContactBinding.inflate(layoutInflater)
 
+    if (params.data != null) {
+      binding?.dialogAcTilName?.editText?.setText(params.data?.nama)
+      binding?.dialogAcTilNum?.editText?.setText(params.data?.telepon)
+    }
+
     alertDialog?.apply {
       setView(binding?.root)
       setPositiveButton("Tambahkan") { dialog, _ ->
@@ -31,9 +35,9 @@ class AddContactDialog(
           binding?.dialogAcTilName?.editText?.text.toString().isEmpty()
           || binding?.dialogAcTilNum?.editText?.text.toString().isEmpty()
         ) {
-          onPositiveClick(null)
+          params.onPositiveClick(null)
         } else {
-          onPositiveClick(
+          params.onPositiveClick(
             ContactModel(
               nama = binding?.dialogAcTilName?.editText?.text.toString(),
               telepon = binding?.dialogAcTilNum?.editText?.text.toString()
