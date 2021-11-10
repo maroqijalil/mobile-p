@@ -29,29 +29,23 @@
     android:id="@+id/main_btn_contact"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Buka Kontak"
-    app:layout_constraintBottom_toTopOf="@id/main_btn_browser"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+    android:text="Buka Kontak" />
 
   <Button
     android:id="@+id/main_btn_browser"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Buka Browser"
-    app:layout_constraintBottom_toTopOf="@id/main_btn_map"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/main_btn_contact" />
+    android:text="Buka Browser" />
 
   <Button
     android:id="@+id/main_btn_map"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Buka Maps"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/main_btn_browser" />
+    android:text="Buka Maps" />
+
+  <Button
+    android:id="@+id/main_btn_github"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Buka Github" />
 </LinearLayout>

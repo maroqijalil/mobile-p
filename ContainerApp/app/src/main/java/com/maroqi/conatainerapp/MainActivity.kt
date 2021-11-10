@@ -32,5 +32,12 @@ class MainActivity : AppCompatActivity() {
       }
       startActivity(intent)
     }
+
+    binding.mainBtnGithub.setOnClickListener {
+      val intent = Uri.parse("app://com.maroqi.githubapp").let {
+        Intent(Intent.ACTION_VIEW, it)
+      }
+      startActivity(intent)
+    }
   }
 }
