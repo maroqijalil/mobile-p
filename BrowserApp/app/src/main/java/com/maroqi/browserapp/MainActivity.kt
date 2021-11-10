@@ -5,6 +5,8 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.webkit.WebResourceError
+import android.webkit.WebResourceRequest
 import android.webkit.WebViewClient
 import android.widget.SearchView
 import com.maroqi.browserapp.databinding.ActivityMainBinding
@@ -16,13 +18,15 @@ class MainActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivityMainBinding
 
+  private var lastSearchUrl: String = "https://www.google.com/"
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     binding = ActivityMainBinding.inflate(layoutInflater)
     setContentView(binding.root)
 
     binding.mainSrl.setOnRefreshListener {
-      setupWeb()
+      searchUrl(lastSearchUrl)
     }
 
     setupWeb()
@@ -43,11 +47,14 @@ class MainActivity : AppCompatActivity() {
     searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
       override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null) {
-          if (query.startsWith("http://") || query.startsWith("https://")) {
-            setupWeb(query)
+          val url = if (query.startsWith("http://") || query.startsWith("https://")) {
+            searchUrl(query)
+            query
           } else {
-            setupWeb("http://$query")
+            searchUrl("http://$query")
+            "http://$query"
           }
+          lastSearchUrl = url
         }
         return false
       }
@@ -60,19 +67,34 @@ class MainActivity : AppCompatActivity() {
     return true
   }
 
-  private fun setupWeb(url: String = "https://www.google.com/") {
-    binding.mainSrl.isRefreshing = true
-
+  private fun setupWeb() {
     binding.mainWv.apply {
-      settings.apply {
-        javaScriptEnabled = true
-      }
-      loadUrl(url)
+      settings.javaScriptEnabled = true
       webViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView?, url: String?) {
           binding.mainSrl.isRefreshing = false
         }
+
+        override fun onReceivedError(
+          view: WebView?,
+          request: WebResourceRequest?,
+          error: WebResourceError?
+        ) {
+          if (lastSearchUrl.startsWith("http://")) {
+            searchUrl("https://${lastSearchUrl.substringAfter("http://")}")
+            lastSearchUrl = "https://${lastSearchUrl.substringAfter("http://")}"
+          } else {
+            super.onReceivedError(view, request, error)
+          }
+        }
       }
     }
+
+    searchUrl(lastSearchUrl)
+  }
+
+  private fun searchUrl(url: String = "https://www.google.com/") {
+    binding.mainSrl.isRefreshing = true
+    binding.mainWv.loadUrl(url)
   }
 }

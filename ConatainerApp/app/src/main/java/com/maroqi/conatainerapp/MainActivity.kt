@@ -25,5 +25,12 @@ class MainActivity : AppCompatActivity() {
       }
       startActivity(intent)
     }
+
+    binding.mainBtnBrowser.setOnClickListener {
+      val intent = Uri.parse("web://com.maroqi.browserapp").let {
+        Intent(Intent.ACTION_VIEW, it)
+      }
+      startActivity(intent)
+    }
   }
 }

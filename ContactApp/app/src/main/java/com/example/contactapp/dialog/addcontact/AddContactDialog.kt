@@ -23,14 +23,17 @@ class AddContactDialog(
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
     binding = DialogAddContactBinding.inflate(layoutInflater)
 
-    if (params.data != null) {
+    val positiveText = if (params.data != null) {
       binding?.dialogAcTilName?.editText?.setText(params.data?.nama)
       binding?.dialogAcTilNum?.editText?.setText(params.data?.telepon)
+      "Simpan"
+    } else {
+      "Tambahkan"
     }
 
     alertDialog?.apply {
       setView(binding?.root)
-      setPositiveButton("Tambahkan") { dialog, _ ->
+      setPositiveButton(positiveText) { dialog, _ ->
         if (
           binding?.dialogAcTilName?.editText?.text.toString().isEmpty()
           || binding?.dialogAcTilNum?.editText?.text.toString().isEmpty()
