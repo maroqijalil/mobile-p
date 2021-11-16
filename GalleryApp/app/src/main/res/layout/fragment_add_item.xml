@@ -50,12 +50,12 @@
       android:layout_height="wrap_content"
       android:layout_marginEnd="16dp"
       android:backgroundTint="@android:color/darker_gray"
-      android:text="@string/previous" />
+      android:text="Batal" />
 
     <Button
       android:id="@+id/add_item_btn_save"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="@string/previous" />
+      android:text="Tambahkan" />
   </com.google.android.flexbox.FlexboxLayout>
 </RelativeLayout>
