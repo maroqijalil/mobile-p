@@ -4,16 +4,16 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.fiqi.galleryapp.data.db.firebase.GalleryFirebase
-import com.fiqi.galleryapp.data.db.storage.StorageRepository
+import com.fiqi.galleryapp.data.db.firebase.firestore.GalleryFirestore
+import com.fiqi.galleryapp.data.db.firebase.storage.GalleryStorage
 import com.fiqi.galleryapp.data.model.FileModel
 import com.fiqi.galleryapp.data.model.ImageModel
 import com.fiqi.galleryapp.data.params.SuperParams
 import kotlinx.coroutines.*
 
 class MainViewModel : ViewModel() {
-  private val galleryFb = GalleryFirebase()
-  private val storageRepository = StorageRepository()
+  private val galleryFb = GalleryFirestore()
+  private val storageRepository = GalleryStorage()
 
   private val _images = MutableLiveData<ArrayList<ImageModel>>()
 
@@ -23,7 +23,8 @@ class MainViewModel : ViewModel() {
     galleryFb.read(SuperParams(
       onSucceeded = { data ->
         _images.value = data
-      }
+      },
+      onFailed = ::setfFailedMessage
     ))
   }
 
@@ -68,4 +69,10 @@ class MainViewModel : ViewModel() {
   fun setImageUriData(imageUri: Uri) = _imageUri.postValue(imageUri)
 
   fun getImageUri(): LiveData<Uri> = _imageUri
+
+  private val _failedMessage = MutableLiveData<String>()
+
+  fun setfFailedMessage(message: String) = _failedMessage.postValue(message)
+
+  fun getFailedMessage(): LiveData<String> = _failedMessage
 }

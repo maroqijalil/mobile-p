@@ -1,79 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
+  android:layout_height="wrap_content"
   tools:context=".view.screens.main.AddItemFragment">
 
-  <ImageView
-    android:id="@+id/add_item_iv_image"
-    android:layout_width="match_parent"
-    android:layout_height="400dp"
-    android:layout_alignParentTop="true"
-    android:padding="64dp"
-    android:scaleType="centerCrop"
-    android:src="@drawable/ic_baseline_add_a_photo_24" />
-
-  <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/add_item_til_title"
-    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@id/add_item_iv_image"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentEnd="true"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="14dp"
-    android:hint="Judul"
-    app:startIconTint="@color/colorPrimary">
+    android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputEditText
+    <ImageView
+      android:id="@+id/add_item_iv_image"
+      android:layout_width="match_parent"
+      android:layout_height="400dp"
+      android:padding="64dp"
+      android:scaleType="centerCrop"
+      android:src="@drawable/ic_baseline_add_a_photo_24" />
+
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/add_item_til_title"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="Judul ..." />
-  </com.google.android.material.textfield.TextInputLayout>
+      android:layout_marginHorizontal="16dp"
+      android:layout_marginTop="14dp"
+      android:hint="Judul"
+      app:startIconTint="@color/colorPrimary">
 
-  <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/add_item_til_desc"
-    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/add_item_til_title"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentEnd="true"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginTop="8dp"
-    app:startIconTint="@color/colorPrimary">
+      <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Judul ..." />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/add_item_til_desc"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:gravity="top"
-      android:hint="Tuliskan keterangan gambar disini ..."
-      android:minLines="3" />
-  </com.google.android.material.textfield.TextInputLayout>
+      android:layout_marginHorizontal="16dp"
+      android:layout_marginTop="8dp"
+      app:startIconTint="@color/colorPrimary">
 
-  <com.google.android.flexbox.FlexboxLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:padding="16dp"
-    app:flexDirection="row"
-    app:justifyContent="flex_end">
+      <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:hint="Tuliskan keterangan gambar disini ..."
+        android:minLines="3" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-      android:id="@+id/add_item_btn_cancel"
-      android:layout_width="wrap_content"
+    <com.google.android.flexbox.FlexboxLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      android:backgroundTint="@android:color/darker_gray"
-      android:text="Batal" />
+      android:layout_marginTop="24dp"
+      android:padding="16dp"
+      app:flexDirection="row"
+      app:justifyContent="flex_end">
 
-    <Button
-      android:id="@+id/add_item_btn_save"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Tambahkan" />
-  </com.google.android.flexbox.FlexboxLayout>
-</RelativeLayout>
+      <Button
+        android:id="@+id/add_item_btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@android:color/darker_gray"
+        android:text="Batal" />
+
+      <Button
+        android:id="@+id/add_item_btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tambahkan" />
+    </com.google.android.flexbox.FlexboxLayout>
+  </LinearLayout>
+</ScrollView>

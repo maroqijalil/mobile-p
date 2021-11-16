@@ -1,4 +1,4 @@
-package com.fiqi.galleryapp.data.db.storage
+package com.fiqi.galleryapp.data.db.firebase.storage
 
 import android.net.Uri
 import com.fiqi.galleryapp.data.model.FileModel
@@ -7,9 +7,10 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.android.gms.tasks.Continuation
+import com.google.firebase.storage.FirebaseStorage
 
-class StorageRepository {
-  private val storage = FbStorage().getInstance().getReference("images_data")
+class GalleryStorage {
+  private val storage = FirebaseStorage.getInstance().getReference("images_data")
 
   fun uploadFile(param: SuperParams<FileModel<Uri>>) {
     val storageRef: StorageReference = storage.child(FileModel<Uri>().getRefName())
@@ -19,7 +20,7 @@ class StorageRepository {
     val filePath = storageRef.child(fileName)
     filePath.putFile(param.data?.file!!)
       .continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-        if(!task.isSuccessful) {
+        if (!task.isSuccessful) {
           task.exception?.let { exc ->
             throw exc
           }
