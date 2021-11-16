@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fiqi.galleryapp.databinding.ItemImageBinding
-import com.fiqi.galleryapp.data.model.Image
+import com.fiqi.galleryapp.data.model.ImageModel
 
 class ImageListAdapter : RecyclerView.Adapter<ImageListViewHolder>() {
 
-  private val _datas: ArrayList<Image> = arrayListOf()
+  private val _data: ArrayList<ImageModel> = arrayListOf()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageListViewHolder {
     val binding = ItemImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -16,18 +16,18 @@ class ImageListAdapter : RecyclerView.Adapter<ImageListViewHolder>() {
   }
 
   override fun onBindViewHolder(holder: ImageListViewHolder, position: Int) {
-    holder.bind(_datas[position])
+    holder.bind(_data[position])
   }
 
   override fun getItemCount(): Int {
-    return _datas.size
+    return _data.size
   }
 
-  fun changeList(datas: ArrayList<Image>) {
-    if (_datas.size > 0) {
-      _datas.clear()
+  fun changeList(data: ArrayList<ImageModel>) {
+    if (_data.size > 0) {
+      _data.clear()
     }
 
-    _datas.addAll(datas)
+    _data.addAll(data)
   }
 }

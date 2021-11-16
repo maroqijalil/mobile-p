@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "975462184150",
+    "project_id": "galerry-app",
+    "storage_bucket": "galerry-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975462184150:android:87ac6c41fab5660a970577",
+        "android_client_info": {
+          "package_name": "com.fiqi.galleryapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975462184150-8smo81hq0dml2005p938d2pv0ntg78ap.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPmyD6u8iMnRGAs9rBRVHGBm2YthHlndY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975462184150-8smo81hq0dml2005p938d2pv0ntg78ap.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
