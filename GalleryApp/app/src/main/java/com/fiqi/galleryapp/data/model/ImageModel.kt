@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ImageModel(
-  @Exclude
+  @get:Exclude
   var id: String = "",
   var title: String = "",
   var link: String = "",
