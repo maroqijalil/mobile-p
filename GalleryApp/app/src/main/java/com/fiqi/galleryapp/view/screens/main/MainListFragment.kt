@@ -13,11 +13,13 @@ import com.fiqi.galleryapp.databinding.FragmentMainListBinding
 import com.fiqi.galleryapp.view.adapters.main.ImageListAdapter
 import com.fiqi.galleryapp.view.viewmodels.main.MainViewModel
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 class MainListFragment : Fragment() {
 
   private var _binding: FragmentMainListBinding? = null
-  private val binding get() = _binding!!
+  private val binding
+    get() = _binding!!
 
   private val viewModel: MainViewModel by activityViewModels()
 
@@ -40,8 +42,9 @@ class MainListFragment : Fragment() {
 
   private fun setupButtons() {
     binding.mainFabAdd.setOnClickListener {
+      val datestamp = Date().time.toString()
       findNavController().navigate(
-        MainListFragmentDirections.actionNavMainListFragmentToNavAddItemFragment()
+        MainListFragmentDirections.actionNavMainListFragmentToNavAddItemFragment(datestamp)
       )
     }
   }

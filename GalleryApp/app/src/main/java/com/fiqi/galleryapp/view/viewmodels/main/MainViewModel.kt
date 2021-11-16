@@ -14,6 +14,7 @@ import kotlinx.coroutines.*
 class MainViewModel : ViewModel() {
   private val galleryFb = GalleryFirebase()
   private val storageRepository = StorageRepository()
+
   private val _images = MutableLiveData<ArrayList<ImageModel>>()
 
   fun getImages(): LiveData<ArrayList<ImageModel>> = _images
@@ -56,4 +57,15 @@ class MainViewModel : ViewModel() {
     galleryFb.delete(SuperParams(data = id, onSucceeded = {}, onFailed = {}))
   }
 
+  private val _datestamp = MutableLiveData<String>()
+
+  fun setDatestampData(datestamp: String) = _datestamp.postValue(datestamp)
+
+  fun getDatestamp(): LiveData<String> = _datestamp
+
+  private val _imageUri = MutableLiveData<Uri>()
+
+  fun setImageUriData(imageUri: Uri) = _imageUri.postValue(imageUri)
+
+  fun getImageUri(): LiveData<Uri> = _imageUri
 }
