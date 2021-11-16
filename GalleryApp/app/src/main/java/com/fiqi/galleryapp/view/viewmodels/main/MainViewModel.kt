@@ -75,4 +75,21 @@ class MainViewModel : ViewModel() {
   fun setfFailedMessage(message: String) = _failedMessage.postValue(message)
 
   fun getFailedMessage(): LiveData<String> = _failedMessage
+
+  private val readExternalStorageAction = MutableLiveData {}
+
+  fun getReadExternalStorageAction(): LiveData<() -> Unit> = readExternalStorageAction
+
+  fun setReadExternalStorageAction(action: () -> Unit) {
+    readExternalStorageAction.value = action
+  }
+
+  private val cameraAction = MutableLiveData {}
+
+  fun getCameraAction(): LiveData<() -> Unit> = cameraAction
+
+  fun setCameraAction(action: () -> Unit) {
+    cameraAction.value = action
+  }
+
 }

@@ -6,10 +6,6 @@ data class FileModel<T>(
   var file: T? = null,
   var link: String = ""
 ) {
-  fun getRefName(): String {
-    return "images_data"
-  }
-
   fun toMap(): Map<String, Any> {
     return mapOf(
       "name" to name,

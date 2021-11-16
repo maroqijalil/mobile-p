@@ -19,6 +19,16 @@
       android:scaleType="centerCrop"
       android:src="@drawable/ic_baseline_add_a_photo_24" />
 
+    <TextView
+        android:id="@+id/add_item_iv_err_image"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textSize="14sp"
+      android:text="Error"
+        android:visibility="gone"
+      android:layout_marginHorizontal="16dp"
+      android:textColor="@android:color/holo_red_light"/>
+
     <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/add_item_til_title"
       style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -26,13 +36,12 @@
       android:layout_height="wrap_content"
       android:layout_marginHorizontal="16dp"
       android:layout_marginTop="14dp"
-      android:hint="Judul"
       app:startIconTint="@color/colorPrimary">
 
       <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Judul ..." />
+        android:hint="Judul" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -48,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top"
-        android:hint="Tuliskan keterangan gambar disini ..."
+        android:hint="Keterangan"
         android:minLines="3" />
     </com.google.android.material.textfield.TextInputLayout>
 

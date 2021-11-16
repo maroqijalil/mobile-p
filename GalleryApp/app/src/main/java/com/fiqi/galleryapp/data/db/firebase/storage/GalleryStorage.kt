@@ -13,11 +13,10 @@ class GalleryStorage {
   private val storage = FirebaseStorage.getInstance().getReference("images_data")
 
   fun uploadFile(param: SuperParams<FileModel<Uri>>) {
-    val storageRef: StorageReference = storage.child(FileModel<Uri>().getRefName())
 
     val fileName = param.data?.name + "." + param.data?.format
 
-    val filePath = storageRef.child(fileName)
+    val filePath = storage.child(fileName)
     filePath.putFile(param.data?.file!!)
       .continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
         if (!task.isSuccessful) {

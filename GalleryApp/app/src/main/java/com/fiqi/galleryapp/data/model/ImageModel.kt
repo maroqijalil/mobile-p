@@ -1,10 +1,12 @@
 package com.fiqi.galleryapp.data.model
 
 import android.os.Parcelable
+import com.google.firebase.firestore.Exclude
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ImageModel(
+  @Exclude
   var id: String = "",
   var title: String = "",
   var link: String = "",
