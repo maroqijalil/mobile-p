@@ -28,6 +28,14 @@ class AddItemFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+
+    setupButtons()
+  }
+
+  private fun setupButtons() {
+    binding.addItemBtnCancel.setOnClickListener { requireActivity().onBackPressed() }
+
+    binding.addItemBtnSave.setOnClickListener { requireActivity().onBackPressed() }
   }
 
   override fun onDestroyView() {

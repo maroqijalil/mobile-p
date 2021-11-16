@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fiqi.galleryapp.databinding.FragmentMainListBinding
 import com.fiqi.galleryapp.view.adapters.main.ImageListAdapter
@@ -37,9 +39,10 @@ class MainListFragment : Fragment() {
   }
 
   private fun setupButtons() {
-    binding.mainFabAdd.setOnClickListener { view ->
-      Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        .setAction("Action", null).show()
+    binding.mainFabAdd.setOnClickListener {
+      findNavController().navigate(
+        MainListFragmentDirections.actionNavMainListFragmentToNavAddItemFragment()
+      )
     }
   }
 
