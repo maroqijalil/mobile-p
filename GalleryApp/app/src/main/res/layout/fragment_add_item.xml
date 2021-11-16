@@ -8,12 +8,13 @@
   tools:context=".view.screens.main.AddItemFragment">
 
   <ImageView
-    android:id="@+id/add_item_iv_image"
-    android:layout_width="match_parent"
-    android:layout_height="400dp"
-    android:layout_alignParentTop="true"
-    android:padding="64dp"
-    android:src="@drawable/ic_baseline_add_a_photo_24" />
+      android:id="@+id/add_item_iv_image"
+      android:layout_width="match_parent"
+      android:layout_height="400dp"
+      android:scaleType="centerCrop"
+      android:layout_alignParentTop="true"
+      android:padding="64dp"
+      android:src="@drawable/ic_baseline_add_a_photo_24" />
 
   <com.google.android.material.textfield.TextInputLayout
       android:id="@+id/add_item_til_desc"
@@ -37,25 +38,25 @@
   </com.google.android.material.textfield.TextInputLayout>
 
   <com.google.android.flexbox.FlexboxLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:padding="16dp"
-    app:flexDirection="row"
-    app:justifyContent="flex_end">
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:padding="16dp"
+      app:flexDirection="row"
+      app:justifyContent="flex_end">
 
     <Button
-      android:id="@+id/add_item_btn_cancel"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      android:backgroundTint="@android:color/darker_gray"
-      android:text="Batal" />
+        android:id="@+id/add_item_btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@android:color/darker_gray"
+        android:text="Batal" />
 
     <Button
-      android:id="@+id/add_item_btn_save"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Tambahkan" />
+        android:id="@+id/add_item_btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tambahkan" />
   </com.google.android.flexbox.FlexboxLayout>
 </RelativeLayout>
