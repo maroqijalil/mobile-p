@@ -26,7 +26,7 @@
     android:layout_marginHorizontal="16dp"
     android:layout_marginTop="14dp"
     android:hint="Judul"
-    app:startIconTint="@color/purple_700">
+    app:startIconTint="@color/colorPrimary">
 
     <com.google.android.material.textfield.TextInputEditText
       android:layout_width="match_parent"
@@ -44,14 +44,14 @@
     android:layout_alignParentEnd="true"
     android:layout_marginHorizontal="16dp"
     android:layout_marginTop="8dp"
-    app:startIconTint="@color/purple_700">
+    app:startIconTint="@color/colorPrimary">
 
     <com.google.android.material.textfield.TextInputEditText
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="top"
-      android:minLines="3"
-      android:hint="Tuliskan keterangan gambar disini ..." />
+      android:hint="Tuliskan keterangan gambar disini ..."
+      android:minLines="3" />
   </com.google.android.material.textfield.TextInputLayout>
 
   <com.google.android.flexbox.FlexboxLayout
