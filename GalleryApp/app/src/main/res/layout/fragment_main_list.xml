@@ -4,24 +4,27 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".MainListFragment">
+  tools:context=".view.screens.main.MainListFragment">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/main_rv_image"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       tools:listitem="@layout/item_image" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fab"
+    android:id="@+id/main_fab_add"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom|end"
     android:layout_marginEnd="@dimen/fab_margin"
     android:layout_marginBottom="16dp"
-    app:srcCompat="@drawable/ic_baseline_add_24" />
+    android:backgroundTint="@color/purple_500"
+    app:srcCompat="@drawable/ic_baseline_add_24"
+    app:tint="@android:color/white" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
