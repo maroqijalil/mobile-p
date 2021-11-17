@@ -89,6 +89,12 @@ class MainViewModel : ViewModel() {
 
   fun getImageUri(): LiveData<Uri> = _imageUri
 
+  private val _imageMimeType = MutableLiveData<String>()
+
+  fun setImageMimeTypeData(imageUri: String) = _imageMimeType.postValue(imageUri)
+
+  fun getImageMimeType(): LiveData<String> = _imageMimeType
+
   private val _succeededMessage = MutableLiveData<String>()
 
   fun getSucceededMessage(): LiveData<String> = _succeededMessage

@@ -60,6 +60,12 @@ class AddItemFragment : Fragment() {
           binding.addItemIvImage.setImageURI(uri)
 
           viewModel.setImageUriData(uri)
+          viewModel.setImageMimeTypeData(
+            MimeTypeMap.getSingleton()
+              .getExtensionFromMimeType(
+                requireActivity().contentResolver?.getType(viewModel.getImageUri().value!!)
+              )!!
+          )
         }
       }
     takeImageLauncher =
@@ -124,11 +130,7 @@ class AddItemFragment : Fragment() {
         viewModel.insertImagesData(
           title = binding.addItemTilTitle.editText?.text.toString(),
           imageUri = viewModel.getImageUri().value!!,
-          imageFormat =
-          MimeTypeMap.getSingleton()
-            .getExtensionFromMimeType(
-              requireActivity().contentResolver?.getType(viewModel.getImageUri().value!!)
-            )!!,
+          imageFormat = viewModel.getImageMimeType().value!!,
           desc = binding.addItemTilDesc.editText?.text.toString()
         )
       }
@@ -145,6 +147,7 @@ class AddItemFragment : Fragment() {
               requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             )
             viewModel.setImageUriData(Uri.fromFile(file))
+            viewModel.setImageMimeTypeData(".jpg")
 
             takeImageLauncher.launch(
               FileProvider.getUriForFile(
