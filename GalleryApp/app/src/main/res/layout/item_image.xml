@@ -8,25 +8,26 @@
   android:padding="8dp">
 
   <androidx.cardview.widget.CardView
-      android:id="@+id/item_cv"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      app:cardCornerRadius="8dp"
-      app:cardElevation="0dp">
+    android:id="@+id/item_cv"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="0dp">
+
     <ImageView
-        android:id="@+id/item_iv_image"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:scaleType="centerCrop"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_baseline_image_24" />
+      android:id="@+id/item_iv_image"
+      android:layout_width="160dp"
+      android:layout_height="160dp"
+      android:layout_gravity="center"
+      android:scaleType="centerCrop"
+      android:src="@drawable/ic_baseline_image_24" />
   </androidx.cardview.widget.CardView>
 
   <TextView
     android:id="@+id/item_tv_title"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Title"
+    android:text="Judul"
     android:textColor="@android:color/background_dark"
     android:textSize="20sp"
     android:textStyle="bold" />
@@ -35,7 +36,7 @@
     android:id="@+id/item_tv_desc"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="This image is ..."
+    android:text="Gambar ini adalah ..."
     android:textColor="@android:color/background_dark"
     android:textSize="16sp" />
 </LinearLayout>

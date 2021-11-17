@@ -35,7 +35,12 @@ class MainListFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    viewModel.getFailureMessage().observe(viewLifecycleOwner) { showToast(it) }
+    viewModel.getFailureMessage().observe(viewLifecycleOwner) {
+      if (it != null) {
+        showToast(it)
+        viewModel.setFailureMessage(null)
+      }
+    }
 
     setupButtons()
     setupList()

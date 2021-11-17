@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fiqi.galleryapp.R
 import com.fiqi.galleryapp.databinding.FragmentViewItemBinding
@@ -50,11 +51,19 @@ class ViewItemFragment : Fragment() {
     }
     setHasOptionsMenu(true)
 
-    viewModel.getFailureMessage().observe(viewLifecycleOwner) { showToast(it) }
+    viewModel.getFailureMessage().observe(viewLifecycleOwner) {
+      if (it != null) {
+        showToast(it)
+        viewModel.setFailureMessage(null)
+      }
+    }
 
     viewModel.getSucceededMessage().observe(viewLifecycleOwner) {
-      requireActivity().onBackPressed()
-      showToast(it)
+      if (it != null) {
+        findNavController().navigateUp()
+        showToast(it)
+        viewModel.setSucceededMessage(null)
+      }
     }
   }
 
@@ -72,7 +81,6 @@ class ViewItemFragment : Fragment() {
             message = "Apakah Anda yakin ingin menghapus gambar ini?",
             onPositiveClick = {
               viewModel.deleteImagesData(viewModel.getImage().value?.id!!)
-              requireActivity().onBackPressed()
             }
           )
         ).show(parentFragmentManager, null)
@@ -84,5 +92,10 @@ class ViewItemFragment : Fragment() {
 
   private fun showToast(message: String) {
     Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    _binding = null
   }
 }

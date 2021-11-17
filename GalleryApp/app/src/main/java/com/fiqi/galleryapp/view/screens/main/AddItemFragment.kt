@@ -17,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.view.setPadding
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.fiqi.galleryapp.BuildConfig
 import com.fiqi.galleryapp.databinding.FragmentAddItemBinding
 import com.fiqi.galleryapp.view.dialog.imagechooser.ImageChooserDialog
@@ -48,7 +49,7 @@ class AddItemFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
           permissions.forEach { (_, granted) ->
             if (!granted) {
-              requireActivity().onBackPressed()
+              findNavController().navigateUp()
             }
           }
         }
@@ -60,12 +61,6 @@ class AddItemFragment : Fragment() {
           binding.addItemIvImage.setImageURI(uri)
 
           viewModel.setImageUriData(uri)
-          viewModel.setImageMimeTypeData(
-            MimeTypeMap.getSingleton()
-              .getExtensionFromMimeType(
-                requireActivity().contentResolver?.getType(viewModel.getImageUri().value!!)
-              )!!
-          )
         }
       }
     takeImageLauncher =
@@ -84,11 +79,19 @@ class AddItemFragment : Fragment() {
 
     viewModel.setDatestampData(Date().time.toString())
 
-    viewModel.getFailureMessage().observe(viewLifecycleOwner) { showToast(it) }
+    viewModel.getFailureMessage().observe(viewLifecycleOwner) {
+      if (it != null) {
+        showToast(it)
+        viewModel.setFailureMessage(null)
+      }
+    }
 
     viewModel.getSucceededMessage().observe(viewLifecycleOwner) {
-      requireActivity().onBackPressed()
-      showToast(it)
+      if (it != null) {
+        findNavController().navigateUp()
+        showToast(it)
+        viewModel.setSucceededMessage(null)
+      }
     }
 
     setupButtons()
@@ -123,14 +126,21 @@ class AddItemFragment : Fragment() {
   }
 
   private fun setupButtons() {
-    binding.addItemBtnCancel.setOnClickListener { requireActivity().onBackPressed() }
+    binding.addItemBtnCancel.setOnClickListener { findNavController().navigateUp() }
 
     binding.addItemBtnSave.setOnClickListener {
       if (validateInput()) {
         viewModel.insertImagesData(
           title = binding.addItemTilTitle.editText?.text.toString(),
           imageUri = viewModel.getImageUri().value!!,
-          imageFormat = viewModel.getImageMimeType().value!!,
+          imageFormat = if (viewModel.getImageMimeType().value != null) {
+            viewModel.getImageMimeType().value!!
+          } else {
+            MimeTypeMap.getSingleton()
+              .getExtensionFromMimeType(
+                requireActivity().contentResolver?.getType(viewModel.getImageUri().value!!)
+              )!!
+          },
           desc = binding.addItemTilDesc.editText?.text.toString()
         )
       }

@@ -4,19 +4,19 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".view.screens.main.MainListFragment"
+  android:paddingHorizontal="8dp"
   android:paddingVertical="16dp"
-  android:paddingHorizontal="8dp">
+  tools:context=".view.screens.main.MainListFragment">
 
   <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_rv_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_image" />
+      android:id="@+id/main_rv_image"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:listitem="@layout/item_image" />
   </androidx.constraintlayout.widget.ConstraintLayout>
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton

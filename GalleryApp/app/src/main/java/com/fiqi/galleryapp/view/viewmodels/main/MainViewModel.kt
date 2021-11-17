@@ -12,15 +12,15 @@ import com.fiqi.galleryapp.data.params.SuperParams
 import kotlinx.coroutines.*
 
 class MainViewModel : ViewModel() {
-  private val galleryFb = GalleryFirestore()
-  private val storageRepository = GalleryStorage()
+  private val galleryFirestore = GalleryFirestore()
+  private val galleryStorage = GalleryStorage()
 
   private val _images = MutableLiveData<ArrayList<ImageModel>>()
 
   fun getImages(): LiveData<ArrayList<ImageModel>> = _images
 
   fun getImagesData() {
-    galleryFb.read(
+    galleryFirestore.read(
       SuperParams(
         onSucceeded = { data ->
           _images.value = data
@@ -31,10 +31,8 @@ class MainViewModel : ViewModel() {
   }
 
   fun insertImagesData(title: String, imageUri: Uri, imageFormat: String, desc: String) {
-    var file: FileModel<Uri> = FileModel<Uri>()
-
     CoroutineScope(Dispatchers.Main + Job()).launch {
-      storageRepository.uploadFile(
+      galleryStorage.uploadFile(
         SuperParams(
           data = FileModel(
             file = imageUri,
@@ -42,15 +40,15 @@ class MainViewModel : ViewModel() {
             format = imageFormat
           ),
           onSucceeded = { data ->
-            file = data!![0]
-            galleryFb.insert(
+            val file = data!![0]
+            galleryFirestore.insert(
               SuperParams(
                 data = ImageModel(
                   title = title,
                   link = file.link,
                   desc = desc
                 ),
-                onSucceeded = { _succeededMessage.value = "Gambar berhasil ditambahkan" },
+                onSucceeded = { setSucceededMessage("Gambar berhasil ditambahkan") },
                 onFailed = ::setFailureMessage
               )
             )
@@ -62,10 +60,10 @@ class MainViewModel : ViewModel() {
   }
 
   fun deleteImagesData(id: String) {
-    galleryFb.delete(
+    galleryFirestore.delete(
       SuperParams(
         data = id,
-        onSucceeded = { _succeededMessage.value = "Gambar berhasil dihapus" },
+        onSucceeded = { setSucceededMessage("Gambar berhasil dihapus") },
         onFailed = ::setFailureMessage
       )
     )
@@ -97,11 +95,13 @@ class MainViewModel : ViewModel() {
 
   private val _succeededMessage = MutableLiveData<String>()
 
+  fun setSucceededMessage(message: String?) = _succeededMessage.postValue(message)
+
   fun getSucceededMessage(): LiveData<String> = _succeededMessage
 
   private val _failureMessage = MutableLiveData<String>()
 
-  fun setFailureMessage(message: String) = _failureMessage.postValue(message)
+  fun setFailureMessage(message: String?) = _failureMessage.postValue(message)
 
   fun getFailureMessage(): LiveData<String> = _failureMessage
 }
