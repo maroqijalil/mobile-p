@@ -28,7 +28,7 @@ class MainViewModel : ViewModel() {
     ))
   }
 
-  fun addImageData(title: String, imageUri: Uri, imageFormat: String, desc: String) {
+  fun insertImagesData(title: String, imageUri: Uri, imageFormat: String, desc: String) {
     var file: FileModel<Uri> = FileModel<Uri>()
 
     CoroutineScope(Dispatchers.Main + Job()).launch {
@@ -54,9 +54,15 @@ class MainViewModel : ViewModel() {
     }
   }
 
-  fun deleteImageData(id: String) {
+  fun deleteImagesData(id: String) {
     galleryFb.delete(SuperParams(data = id, onSucceeded = {}, onFailed = {}))
   }
+
+  private val _image = MutableLiveData<ImageModel>()
+
+  fun getImage(): LiveData<ImageModel> = _image
+
+  fun setImageData(data: ImageModel) = _image.postValue(data)
 
   private val _datestamp = MutableLiveData<String>()
 
@@ -75,21 +81,4 @@ class MainViewModel : ViewModel() {
   fun setfFailedMessage(message: String) = _failedMessage.postValue(message)
 
   fun getFailedMessage(): LiveData<String> = _failedMessage
-
-  private val readExternalStorageAction = MutableLiveData {}
-
-  fun getReadExternalStorageAction(): LiveData<() -> Unit> = readExternalStorageAction
-
-  fun setReadExternalStorageAction(action: () -> Unit) {
-    readExternalStorageAction.value = action
-  }
-
-  private val cameraAction = MutableLiveData {}
-
-  fun getCameraAction(): LiveData<() -> Unit> = cameraAction
-
-  fun setCameraAction(action: () -> Unit) {
-    cameraAction.value = action
-  }
-
 }

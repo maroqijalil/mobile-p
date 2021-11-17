@@ -16,7 +16,7 @@ class GalleryFirestore() {
         val datas: ArrayList<ImageModel> = arrayListOf()
         result.forEach { doc ->
           val obj = doc.toObject(ImageModel::class.java)
-          (obj as ImageModel).id = doc.id
+          obj.id = doc.id
           datas.add(obj)
         }
         param.onSucceeded(datas)

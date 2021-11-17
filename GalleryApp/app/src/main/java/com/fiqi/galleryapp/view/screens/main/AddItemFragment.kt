@@ -16,7 +16,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.core.view.setPadding
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.navArgs
 import com.fiqi.galleryapp.BuildConfig
 import com.fiqi.galleryapp.databinding.FragmentAddItemBinding
 import com.fiqi.galleryapp.view.dialog.imagechooser.ImageChooserDialog
@@ -114,7 +113,7 @@ class AddItemFragment : Fragment() {
 
     binding.addItemBtnSave.setOnClickListener {
       if (validateInput()) {
-        viewModel.addImageData(
+        viewModel.insertImagesData(
           title = binding.addItemTilTitle.editText?.text.toString(),
           imageUri = viewModel.getImageUri().value!!,
           imageFormat = MimeTypeMap.getSingleton()
