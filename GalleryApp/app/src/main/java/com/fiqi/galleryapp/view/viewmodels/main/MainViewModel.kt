@@ -20,12 +20,14 @@ class MainViewModel : ViewModel() {
   fun getImages(): LiveData<ArrayList<ImageModel>> = _images
 
   fun getImagesData() {
-    galleryFb.read(SuperParams(
-      onSucceeded = { data ->
-        _images.value = data
-      },
-      onFailed = ::setfFailedMessage
-    ))
+    galleryFb.read(
+      SuperParams(
+        onSucceeded = { data ->
+          _images.value = data
+        },
+        onFailed = ::setFailureMessage
+      )
+    )
   }
 
   fun insertImagesData(title: String, imageUri: Uri, imageFormat: String, desc: String) {
@@ -41,21 +43,32 @@ class MainViewModel : ViewModel() {
           ),
           onSucceeded = { data ->
             file = data!![0]
-            galleryFb.insert(SuperParams(data = ImageModel(
-              title = title,
-              link = file.link,
-              desc = desc
-            ), onSucceeded = {}, onFailed = {})
+            galleryFb.insert(
+              SuperParams(
+                data = ImageModel(
+                  title = title,
+                  link = file.link,
+                  desc = desc
+                ),
+                onSucceeded = { _succeededMessage.value = "Gambar berhasil ditambahkan" },
+                onFailed = ::setFailureMessage
+              )
             )
           },
-          onFailed = {}
+          onFailed = ::setFailureMessage
         )
       )
     }
   }
 
   fun deleteImagesData(id: String) {
-    galleryFb.delete(SuperParams(data = id, onSucceeded = {}, onFailed = {}))
+    galleryFb.delete(
+      SuperParams(
+        data = id,
+        onSucceeded = { _succeededMessage.value = "Gambar berhasil dihapus" },
+        onFailed = ::setFailureMessage
+      )
+    )
   }
 
   private val _image = MutableLiveData<ImageModel>()
@@ -76,9 +89,13 @@ class MainViewModel : ViewModel() {
 
   fun getImageUri(): LiveData<Uri> = _imageUri
 
-  private val _failedMessage = MutableLiveData<String>()
+  private val _succeededMessage = MutableLiveData<String>()
 
-  fun setfFailedMessage(message: String) = _failedMessage.postValue(message)
+  fun getSucceededMessage(): LiveData<String> = _succeededMessage
 
-  fun getFailedMessage(): LiveData<String> = _failedMessage
+  private val _failureMessage = MutableLiveData<String>()
+
+  fun setFailureMessage(message: String) = _failureMessage.postValue(message)
+
+  fun getFailureMessage(): LiveData<String> = _failureMessage
 }

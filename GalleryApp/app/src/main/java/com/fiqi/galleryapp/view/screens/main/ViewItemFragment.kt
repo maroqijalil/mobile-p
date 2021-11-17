@@ -2,6 +2,7 @@ package com.fiqi.galleryapp.view.screens.main
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
@@ -12,7 +13,7 @@ import com.fiqi.galleryapp.view.dialog.confirmation.ConfirmationDialogParam
 import com.fiqi.galleryapp.view.viewmodels.main.MainViewModel
 import com.squareup.picasso.Picasso
 
-class ViewItemFragment: Fragment() {
+class ViewItemFragment : Fragment() {
 
   private var _binding: FragmentViewItemBinding? = null
   private val binding
@@ -48,6 +49,13 @@ class ViewItemFragment: Fragment() {
       viewModel.setImageData(args.imagemodel!!)
     }
     setHasOptionsMenu(true)
+
+    viewModel.getFailureMessage().observe(viewLifecycleOwner) { showToast(it) }
+
+    viewModel.getSucceededMessage().observe(viewLifecycleOwner) {
+      requireActivity().onBackPressed()
+      showToast(it)
+    }
   }
 
   override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -72,5 +80,9 @@ class ViewItemFragment: Fragment() {
       }
       else -> super.onOptionsItemSelected(item)
     }
+  }
+
+  private fun showToast(message: String) {
+    Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
   }
 }

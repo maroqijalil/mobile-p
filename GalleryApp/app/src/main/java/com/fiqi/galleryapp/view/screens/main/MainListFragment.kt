@@ -7,14 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fiqi.galleryapp.databinding.FragmentMainListBinding
 import com.fiqi.galleryapp.view.adapters.main.ImageListAdapter
 import com.fiqi.galleryapp.view.viewmodels.main.MainViewModel
-import com.google.android.material.snackbar.Snackbar
-import java.util.*
 
 class MainListFragment : Fragment() {
 
@@ -37,9 +34,7 @@ class MainListFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    viewModel.getFailedMessage().observe(viewLifecycleOwner) { message ->
-      Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
+    viewModel.getFailureMessage().observe(viewLifecycleOwner) { showToast(it) }
 
     setupButtons()
     setupList()
@@ -70,6 +65,10 @@ class MainListFragment : Fragment() {
       imageAdapter.changeList(datas)
     }
     viewModel.getImagesData()
+  }
+
+  private fun showToast(message: String) {
+    Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
   }
 
   override fun onDestroyView() {
