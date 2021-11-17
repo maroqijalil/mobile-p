@@ -7,7 +7,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.navigation.fragment.NavHostFragment
 import com.fiqi.galleryapp.R
 import com.fiqi.galleryapp.databinding.ActivityMainBinding
 

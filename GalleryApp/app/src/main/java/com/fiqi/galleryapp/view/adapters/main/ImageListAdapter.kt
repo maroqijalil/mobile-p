@@ -6,13 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fiqi.galleryapp.databinding.ItemImageBinding
 import com.fiqi.galleryapp.data.model.ImageModel
 
-class ImageListAdapter : RecyclerView.Adapter<ImageListViewHolder>() {
+class ImageListAdapter(private val onItemClick: (ImageModel) -> Unit = {}) :
+  RecyclerView.Adapter<ImageListViewHolder>() {
 
   private val _data: ArrayList<ImageModel> = arrayListOf()
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageListViewHolder {
     val binding = ItemImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-    return ImageListViewHolder(binding)
+    return ImageListViewHolder(binding, onItemClick)
   }
 
   override fun onBindViewHolder(holder: ImageListViewHolder, position: Int) {

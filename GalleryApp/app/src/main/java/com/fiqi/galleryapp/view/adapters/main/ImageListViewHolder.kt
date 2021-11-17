@@ -7,7 +7,10 @@ import com.fiqi.galleryapp.databinding.ItemImageBinding
 import com.fiqi.galleryapp.data.model.ImageModel
 import com.squareup.picasso.Picasso
 
-class ImageListViewHolder(private val binding: ItemImageBinding) :
+class ImageListViewHolder(
+  private val binding: ItemImageBinding,
+  private val action: (ImageModel) -> Unit = {}
+) :
   RecyclerView.ViewHolder(binding.root) {
   fun bind(data: ImageModel) {
     Picasso.get()
@@ -19,5 +22,7 @@ class ImageListViewHolder(private val binding: ItemImageBinding) :
       .into(binding.itemIvImage)
     binding.itemTvTitle.text = data.title
     binding.itemTvDesc.text = data.desc
+
+    binding.itemCv.setOnClickListener { action(data) }
   }
 }

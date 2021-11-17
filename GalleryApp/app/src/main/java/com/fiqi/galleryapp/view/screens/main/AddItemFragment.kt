@@ -31,8 +31,6 @@ class AddItemFragment : Fragment() {
   private val binding
     get() = _binding!!
 
-  private val args: AddItemFragmentArgs by navArgs()
-
   private val viewModel: MainViewModel by activityViewModels()
 
   private lateinit var pickImageLauncher: ActivityResultLauncher<String>
@@ -78,11 +76,7 @@ class AddItemFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    if (args.datestamp != null) {
-      viewModel.setDatestampData(args.datestamp!!)
-    } else {
-      viewModel.setDatestampData(Date().time.toString())
-    }
+    viewModel.setDatestampData(Date().time.toString())
 
     setupButtons()
   }

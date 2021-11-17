@@ -47,15 +47,18 @@ class MainListFragment : Fragment() {
 
   private fun setupButtons() {
     binding.mainFabAdd.setOnClickListener {
-      val datestamp = Date().time.toString()
       findNavController().navigate(
-        MainListFragmentDirections.actionNavMainListFragmentToNavAddItemFragment(datestamp)
+        MainListFragmentDirections.actionNavMainListFragmentToNavAddItemFragment()
       )
     }
   }
 
   private fun setupList() {
-    imageAdapter = ImageListAdapter()
+    imageAdapter = ImageListAdapter { model ->
+      findNavController().navigate(
+        MainListFragmentDirections.actionNavMainListFragmentToNavViewItemFragment(model)
+      )
+    }
 
     binding.mainRvImage.apply {
       setHasFixedSize(true)
