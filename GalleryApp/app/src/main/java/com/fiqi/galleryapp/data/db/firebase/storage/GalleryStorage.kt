@@ -13,10 +13,8 @@ class GalleryStorage {
   private val storage = FirebaseStorage.getInstance().getReference("images_data")
 
   fun uploadFile(param: SuperParams<FileModel<Uri>>) {
+    val filePath = storage.child(param.data?.name + "." + param.data?.format)
 
-    val fileName = param.data?.name + "." + param.data?.format
-
-    val filePath = storage.child(fileName)
     filePath.putFile(param.data?.file!!)
       .continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
         if (!task.isSuccessful) {
@@ -25,7 +23,8 @@ class GalleryStorage {
           }
         }
         return@Continuation filePath.downloadUrl
-      }).addOnCompleteListener { task ->
+      })
+      .addOnCompleteListener { task ->
         if (task.isSuccessful) {
           val imageUrl = task.result.toString()
           val data = param.data
@@ -34,7 +33,8 @@ class GalleryStorage {
         } else {
           param.onFailed("Gagal mendapatkan url gambar")
         }
-      }.addOnFailureListener { exc ->
+      }
+      .addOnFailureListener { exc ->
         param.onFailed(exc.message!!)
       }
   }

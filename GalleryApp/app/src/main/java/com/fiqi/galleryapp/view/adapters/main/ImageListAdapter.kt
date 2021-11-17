@@ -29,5 +29,6 @@ class ImageListAdapter : RecyclerView.Adapter<ImageListViewHolder>() {
     }
 
     _data.addAll(data)
+    notifyDataSetChanged()
   }
 }
