@@ -124,10 +124,12 @@ class AddItemFragment : Fragment() {
         viewModel.insertImagesData(
           title = binding.addItemTilTitle.editText?.text.toString(),
           imageUri = viewModel.getImageUri().value!!,
-          imageFormat = MimeTypeMap.getSingleton()
-            .getExtensionFromMimeType(
-              requireActivity().contentResolver?.getType(viewModel.getImageUri().value!!)
-            )!!,
+          imageFormat =
+          viewModel.getImageUri().value!!.path?.lastIndexOf(".")?.let { it1 ->
+            viewModel.getImageUri().value!!.path?.substring(
+              it1
+            )
+          }!!,
           desc = binding.addItemTilDesc.editText?.text.toString()
         )
       }
