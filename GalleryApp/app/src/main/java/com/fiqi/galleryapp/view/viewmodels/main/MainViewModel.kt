@@ -20,14 +20,16 @@ class MainViewModel : ViewModel() {
   fun getImages(): LiveData<ArrayList<ImageModel>> = _images
 
   fun getImagesData() {
-    galleryFirestore.read(
-      SuperParams(
-        onSucceeded = { data ->
-          _images.value = data
-        },
-        onFailed = ::setFailureMessage
+    CoroutineScope(Dispatchers.Main + Job()).launch {
+      galleryFirestore.read(
+        SuperParams(
+          onSucceeded = { data ->
+            _images.value = data
+          },
+          onFailed = ::setFailureMessage
+        )
       )
-    )
+    }
   }
 
   fun insertImagesData(title: String, imageUri: Uri, imageFormat: String, desc: String) {
@@ -60,13 +62,15 @@ class MainViewModel : ViewModel() {
   }
 
   fun deleteImagesData(id: String) {
-    galleryFirestore.delete(
-      SuperParams(
-        data = id,
-        onSucceeded = { setSucceededMessage("Gambar berhasil dihapus") },
-        onFailed = ::setFailureMessage
+    CoroutineScope(Dispatchers.Main + Job()).launch {
+      galleryFirestore.delete(
+        SuperParams(
+          data = id,
+          onSucceeded = { setSucceededMessage("Gambar berhasil dihapus") },
+          onFailed = ::setFailureMessage
+        )
       )
-    )
+    }
   }
 
   private val _image = MutableLiveData<ImageModel>()
