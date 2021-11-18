@@ -125,11 +125,10 @@ class AddItemFragment : Fragment() {
           title = binding.addItemTilTitle.editText?.text.toString(),
           imageUri = viewModel.getImageUri().value!!,
           imageFormat =
-          viewModel.getImageUri().value!!.path?.lastIndexOf(".")?.let { it1 ->
-            viewModel.getImageUri().value!!.path?.substring(
-              it1
-            )
-          }!!,
+          MimeTypeMap.getSingleton()
+            .getExtensionFromMimeType(
+              requireActivity().contentResolver?.getType(viewModel.getImageUri().value!!)
+            )!!,
           desc = binding.addItemTilDesc.editText?.text.toString()
         )
       }
