@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fiqi.galleryapp.databinding.FragmentMainListBinding
 import com.fiqi.galleryapp.view.adapters.main.ImageListAdapter
@@ -58,7 +59,7 @@ class MainListFragment : Fragment() {
     binding.mainRvImage.apply {
       setHasFixedSize(true)
       adapter = imageAdapter
-      layoutManager = LinearLayoutManager(context)
+      layoutManager = GridLayoutManager(context, 2)
     }
 
     viewModel.getImages().observe(viewLifecycleOwner) { datas ->

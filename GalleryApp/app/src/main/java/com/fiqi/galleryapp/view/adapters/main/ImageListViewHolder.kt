@@ -23,6 +23,6 @@ class ImageListViewHolder(
     binding.itemTvTitle.text = data.title
     binding.itemTvDesc.text = data.desc
 
-    binding.itemCv.setOnClickListener { action(data) }
+    binding.itemLl.setOnClickListener { action(data) }
   }
 }

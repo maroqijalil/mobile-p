@@ -42,6 +42,7 @@ class MainViewModel : ViewModel() {
             format = imageFormat
           ),
           onSucceeded = { data ->
+            _succeededMessage.value = "Gambar telah diunggah"
             file = data!![0]
             galleryFb.insert(
               SuperParams(
